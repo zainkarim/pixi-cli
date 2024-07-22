@@ -24,25 +24,38 @@ def adjust_sat(image, factor):
     enhancer = ImageEnhance.Color(image)
     return enhancer.enhance(factor)
 
+# Get image size
+def get_image_size(image):
+    return image.size
+
 def main():
     parser = argparse.ArgumentParser(description="pixi-cli")
     parser.add_argument("image_path", help="Path to the input image")
-    parser.add_argument("output_path", help="Path to save the processed image")
+    parser.add_argument("--output_path", help="Path to save the processed image (optional if only checking size)")
     parser.add_argument("--crop", nargs=4, type=int, metavar=('left', 'top', 'right', 'bottom'), help="Crop image")
     parser.add_argument("--exposure", type=float, help="Adjust exposure")
     parser.add_argument("--saturation", type=float, help="Adjust saturation")
+    parser.add_argument("--size", action='store_true', help="Get image size")
     args = parser.parse_args()
 
     image = load_image(args.image_path)
 
-    if args.crop:
-        image = crop_image(image, *args.crop)
-    if args.exposure:
-        image = adjust_ev(image, args.exposure)
-    if args.saturation:
-        image = adjust_sat(image, args.saturation)
+    if args.size:
+        width, height = get_image_size(image)
+        print(f"Image size: {width}x{height}")
 
-    save_image(image, args.output_path)
+    if args.crop or args.exposure or args.saturation:
+        if not args.output_path:
+            parser.error("--output_path is required when performing image processing operations")
+        
+        if args.crop:
+            image = crop_image(image, *args.crop)
+        if args.exposure:
+            image = adjust_ev(image, args.exposure)
+        if args.saturation:
+            image = adjust_sat(image, args.saturation)
+
+        save_image(image, args.output_path)
 
 if __name__ == "__main__":
     main()
