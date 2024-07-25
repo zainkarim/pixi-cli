@@ -6,8 +6,8 @@ def load_image(image_path):
     return Image.open(image_path)
 
 # Save new image
-def save_image(image, output_path):
-    image.save(output_path)
+def save_image(image, output_path, quality = 100):
+    image.save(output_path, quality = quality)
 
 # === IMAGE PROCESSING ===
 # Crop image
@@ -44,6 +44,14 @@ def gaussian_blur(image, radius):
     blurred_image = image.filter(ImageFilter.GaussianBlur(radius))
     return blurred_image
 
+# Edge detection
+def edge_detect(image):
+    return image.filter(ImageFilter.FIND_EDGES)
+
+# Noise reduction
+def reduce_noise(image, factor):
+    return image.filter(ImageFilter.MedianFilter(size = factor))
+
 # Convert to BW
 def bw(image):
     black_and_white = image.convert("L")
@@ -54,7 +62,12 @@ def invert(image):
     inverted = ImageOps.invert(image)
     return inverted
 
-# === TOOLS ===
+# Make thumbnails
+def create_thumbnail(image, size):
+    thumbnail = image.copy()
+    thumbnail.thumbnail(size)
+    return thumbnail
+
 # Get image size
 def get_image_size(image):
     return image.size
@@ -123,9 +136,13 @@ def main():
     parser.add_argument("--sharpness", type = float, help = "Adjust sharpness")
     parser.add_argument("--box_blur", type = float, help = "Blur image (box blur)")
     parser.add_argument("--gaussian_blur", type = float, help = "Blur image (Gaussian blur)")
+    parser.add_argument("--reduce_noise", action='store_true', help = "Reduce image noise")
+    parser.add_argument("--edge_detect", action='store_true', help = "Detect edges in image")
     parser.add_argument("--bw", action='store_true', help = "Convert to black and white")
     parser.add_argument("--invert", action='store_true', help = "Invert colors")
     parser.add_argument("--size", action='store_true', help="Get image size")
+    parser.add_argument("--thumbnail", nargs=2, type=int, metavar=('width', 'height'), help="Create thumbnail")
+    parser.add_argument("--compression", type=int, help="Compress image to specified quality (1-100)")
     parser.add_argument("--metadata", action='store_true', help="Get image metadata")
     parser.add_argument("--rotate90", action='store_true', help="Rotate image 90 degrees")
     parser.add_argument("--rotate180", action='store_true', help="Rotate image 180 degrees")
@@ -145,7 +162,7 @@ def main():
         for key, value in metadata.items():
             print(f"{key}: {value}")
 
-    if args.crop or args.exposure or args.saturation or args.contrast or args.sharpness or args.box_blur or args.gaussian_blur or args.bw or args.invert or args.rotate90 or args.rotate180 or args.rotate270 or args.flip_horiz or args.flip_vert:
+    if args.crop or args.exposure or args.saturation or args.contrast or args.sharpness or args.box_blur or args.gaussian_blur or args.reduce_noise or args.edge_detect or args.bw or args.invert or args.thumbnail or args.compression is not None or args.rotate90 or args.rotate180 or args.rotate270 or args.flip_horiz or args.flip_vert:
         if not args.output_path:
             parser.error("--output_path is required when performing image processing operations")
         
@@ -163,6 +180,12 @@ def main():
             image = box_blur(image, args.box_blur)
         if args.gaussian_blur:
             image = gaussian_blur(image, args.gaussian_blur)
+        if args.reduce_noise:
+            image = reduce_noise(image, args.reduce_noise)
+        if args.edge_detect:
+            image = edge_detect(image)
+        if args.thumbnail:
+            image = create_thumbnail(image, tuple(args.thumbnail))
         if args.bw:
             image = bw(image)
         if args.invert:
@@ -178,7 +201,8 @@ def main():
         if args.flip_vert:
             image = flip_vert(image)
 
-        save_image(image, args.output_path)
+        quality = args.compression if args.compression else 100
+        save_image(image, args.output_path, quality = quality)
 
 if __name__ == "__main__":
     main()
