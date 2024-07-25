@@ -1,4 +1,4 @@
-from PIL import Image, ImageEnhance, ImageOps
+from PIL import Image, ImageEnhance, ImageOps, ImageFilter
 import argparse
 
 # Load image
@@ -34,6 +34,11 @@ def adjust_sharpness(image, factor):
     enhancer = ImageEnhance.Sharpness(image)
     return enhancer.enhance(factor)
 
+# Blur image
+def blur(image):
+    blurred_image = image.filter(ImageFilter.BLUR)
+    return blurred_image
+
 # Convert to BW
 def bw(image):
     black_and_white = image.convert("L")
@@ -58,6 +63,7 @@ def main():
     parser.add_argument("--saturation", type=float, help="Adjust saturation")
     parser.add_argument("--contrast", type = float, help = "Adjust contrast")
     parser.add_argument("--sharpness", type = float, help = "Adjust sharpness")
+    parser.add_argument("--blur", action = 'store_true', help = "Blur image")
     parser.add_argument("--bw", action='store_true', help = "Convert to black and white")
     parser.add_argument("--invert", action='store_true', help = "Invert colors")
     parser.add_argument("--size", action='store_true', help="Get image size")
@@ -69,7 +75,7 @@ def main():
         width, height = get_image_size(image)
         print(f"Image size: {width}x{height}")
 
-    if args.crop or args.exposure or args.saturation or args.contrast or args.sharpness or args.bw or args.invert:
+    if args.crop or args.exposure or args.saturation or args.contrast or args.sharpness or args.blur or args.bw or args.invert:
         if not args.output_path:
             parser.error("--output_path is required when performing image processing operations")
         
@@ -83,6 +89,8 @@ def main():
             image = adjust_contrast(image, args.contrast)
         if args.sharpness:
             image = adjust_sharpness(image, args.sharpness)
+        if args.blur:
+            image = blur(image)
         if args.bw:
             image = bw(image)
         if args.invert:
