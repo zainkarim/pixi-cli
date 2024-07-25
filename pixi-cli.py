@@ -54,6 +54,31 @@ def invert(image):
 def get_image_size(image):
     return image.size
 
+# Rotate image 90 degrees
+def rotate_90(image):
+    rotated_image = image.transpose(Image.ROTATE_90)
+    return rotated_image
+
+# Rotate image 180 degrees
+def rotate_180(image):
+    rotated_image = image.transpose(Image.ROTATE_180)
+    return rotated_image
+
+# Rotate image 180 degrees
+def rotate_270(image):
+    rotated_image = image.transpose(Image.ROTATE_270)
+    return rotated_image
+
+# Flip image horizontally
+def flip_horiz(image):
+    flip_image = image.transpose(Image.FLIP_LEFT_RIGHT)
+    return flip_image
+
+# Flip image vertically
+def flip_vert(image):
+    flip_image = image.transpose(Image.FLIP_TOP_BOTTOM)
+    return flip_image
+
 def main():
     parser = argparse.ArgumentParser(description="pixi-cli")
     parser.add_argument("image_path", help="Path to the input image")
@@ -67,6 +92,11 @@ def main():
     parser.add_argument("--bw", action='store_true', help = "Convert to black and white")
     parser.add_argument("--invert", action='store_true', help = "Invert colors")
     parser.add_argument("--size", action='store_true', help="Get image size")
+    parser.add_argument("--rotate90", action='store_true', help="Rotate image 90 degrees")
+    parser.add_argument("--rotate180", action='store_true', help="Rotate image 180 degrees")
+    parser.add_argument("--rotate270", action='store_true', help="Rotate image 270 degrees")
+    parser.add_argument("--flip_horiz", action='store_true', help="Flip image horizontally")
+    parser.add_argument("--flip_vert", action='store_true', help="Flip image vertically")
     args = parser.parse_args()
 
     image = load_image(args.image_path)
@@ -75,7 +105,7 @@ def main():
         width, height = get_image_size(image)
         print(f"Image size: {width}x{height}")
 
-    if args.crop or args.exposure or args.saturation or args.contrast or args.sharpness or args.blur or args.bw or args.invert:
+    if args.crop or args.exposure or args.saturation or args.contrast or args.sharpness or args.blur or args.bw or args.invert or args.rotate90 or args.rotate180 or args.rotate270 or args.flip_horiz or args.flip_vert:
         if not args.output_path:
             parser.error("--output_path is required when performing image processing operations")
         
@@ -95,6 +125,16 @@ def main():
             image = bw(image)
         if args.invert:
             image = invert(image)
+        if args.rotate90:
+            image = rotate_90(image)
+        if args.rotate180:
+            image = rotate_180(image)
+        if args.rotate270:
+            image = rotate_270(image)
+        if args.flip_horiz:
+            image = flip_horiz(image)
+        if args.flip_vert:
+            image = flip_vert(image)
 
         save_image(image, args.output_path)
 
