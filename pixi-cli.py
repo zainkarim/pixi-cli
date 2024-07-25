@@ -59,7 +59,6 @@ def invert(image):
 def get_image_size(image):
     return image.size
 
-# Extract image metadata
 # Get image metadata
 def get_metadata(image):
     metadata = image._getexif()
@@ -87,7 +86,6 @@ def get_metadata(image):
         return exif_data
     else:
         return {}
-
 
 # Rotate image 90 degrees
 def rotate_90(image):
