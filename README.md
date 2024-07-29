@@ -43,16 +43,6 @@ pip install pixi-cli
 
 ## Adding Pixi to Your PATH
 
-### Windows
-
-1. Extract the downloaded ZIP file to a desired location, such as `C:\Program Files\pixi`.
-2. Open the Start Menu, search for "Environment Variables", and select "Edit the system environment variables".
-3. In the System Properties window, click the "Environment Variables" button.
-4. In the Environment Variables window, find the "Path" variable in the "System variables" section and select it, then click "Edit".
-5. Click "New" and add the path to the directory where `pixi.exe` is located (e.g., `C:\Program Files\pixi`).
-6. Click "OK" to close all dialog boxes.
-7. Open Command Prompt and type `pixi --help` to verify that it works from any location.
-
 ### macOS and Linux
 
 1. Extract the downloaded ZIP file to a desired location, such as `/usr/local/bin/pixi`.
@@ -73,6 +63,8 @@ pip install pixi-cli
    source ~/.bashrc  # or source ~/.bash_profile or source ~/.zshrc
    ```
 6. Open a new terminal and type `pixi --help` to verify that it works from any location.
+
+### Windows support is coming soon!
 
 ## Usage
 
