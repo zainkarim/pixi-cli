@@ -1,7 +1,7 @@
 
-# Pixi-CLI 🧚
+# pixi-cli✨
 
-Pixi-CLI is a command-line tool for image conversion and basic image processing tasks.
+pixi-cli is a command-line tool for image conversion and basic image processing tasks.
 
 ## Features
 
@@ -31,7 +31,7 @@ You can either download Pixi-CLI through PyPI (recommended, requires Python to b
 ### Installing via PyPI
 
 1. Ensure you have Python and pip installed on your machine.
-2. Install Pixi-CLI using pip:
+2. Install pixi-cli using pip:
 ```sh
 pip install pixi-cli
 ```
@@ -41,7 +41,7 @@ pip install pixi-cli
 1. Download the latest release of `pixi` from the [Releases](https://github.com/zainkarim/pixi-cli/releases) page.
 2. Extract the ZIP file to a desired location on your machine.
 
-## Adding Pixi to Your PATH
+## Adding pixi to Your PATH
 
 ### macOS and Linux
 
@@ -64,7 +64,8 @@ pip install pixi-cli
    ```
 6. Open a new terminal and type `pixi --help` to verify that it works from any location.
 
-### Windows support is coming soon!
+### Windows
+Windows support is coming soon!
 
 ## Usage
 
