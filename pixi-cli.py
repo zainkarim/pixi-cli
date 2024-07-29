@@ -1,5 +1,6 @@
-from PIL import Image, ImageEnhance, ImageOps, ImageFilter, ExifTags
+from PIL import Image, ImageEnhance, ImageOps, ImageFilter
 import argparse
+import os
 
 # Load image
 def load_image(image_path):
@@ -9,7 +10,7 @@ def load_image(image_path):
 def save_image(image, output_path, quality = 100):
     image.save(output_path, quality = quality)
 
-# === IMAGE PROCESSING ===
+# ===== IMAGE PROCESSING =====
 # Crop image
 def crop_image(image, left, top, right, bottom):
     return image.crop((left, top, right, bottom))
@@ -125,6 +126,11 @@ def flip_vert(image):
     flip_image = image.transpose(Image.FLIP_TOP_BOTTOM)
     return flip_image
 
+# ===== IMAGE CONVERSION =====
+def convert_image(image, output_format):
+    output_image = image.convert("RGB") if output_format in ['jpg', 'jpeg'] else image
+    return output_image
+
 def main():
     parser = argparse.ArgumentParser(description="pixi-cli")
     parser.add_argument("image_path", help="Path to the input image")
@@ -149,6 +155,7 @@ def main():
     parser.add_argument("--rotate270", action='store_true', help="Rotate image 270 degrees")
     parser.add_argument("--flip_horiz", action='store_true', help="Flip image horizontally")
     parser.add_argument("--flip_vert", action='store_true', help="Flip image vertically")
+    parser.add_argument("--convert", help="Convert image to specified format (e.g., 'png', 'jpg', 'bmp', 'gif', 'tiff', 'svg')")
     args = parser.parse_args()
 
     image = load_image(args.image_path)
@@ -203,6 +210,22 @@ def main():
 
         quality = args.compression if args.compression else 100
         save_image(image, args.output_path, quality = quality)
+
+    if args.convert:
+        base, _ = os.path.splitext(args.image_path)
+        output_format = args.convert.lower()
+        if args.output_path:
+            output_path = args.output_path
+        else:
+            output_path = f"{base}.{output_format}"
+        if output_format == 'svg':
+            import cairosvg
+            cairosvg.svg2png(url = args.image_path, write_to = output_path)
+        else:
+            image = convert_image(image, output_format)
+            image.save(output_path, format = output_format.upper())
+
+        print(f"Image saved as {output_path}")
 
 if __name__ == "__main__":
     main()
