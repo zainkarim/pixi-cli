@@ -146,7 +146,7 @@ adjusting exposure, contrast, saturation, converting image formats, and more.
 
 Example:
 
-    $ pixi --exposure 1.5 --contrast 1.2 image.jpg --output_path processed_image.jpg
+    $ pixi image.jpg --output_path processed_image.jpg --exposure 1.5 --contrast 1.2
 
 For a full list of options, use pixi --h or pixi --help.
 """
