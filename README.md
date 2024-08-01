@@ -25,7 +25,7 @@ pixi-cli is a command-line tool for image conversion and basic image processing 
 - Convert between image formats (e.g., jpg, png, bmp, gif, tiff, svg)
 
 ## Installation
-You can either download Pixi-CLI through PyPI (recommended, requires Python to be installed on your machine) or you can download the executable (more steps, does not requires Python to be installed on your machine)
+You can either download Pixi-CLI through PyPI (recommended) or you can download the executable.
 
 ### Installing via PyPI
 
