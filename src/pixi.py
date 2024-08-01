@@ -134,6 +134,11 @@ def convert_image(image, output_format):
 
 def display_intro_message():
     intro_message = """
+ ____  __  _  _  __       ___  __    __  
+(  _ \(  )( \/ )(  )___  / __)(  )  (  ) 
+ ) __/ )(  )  (  )((___)( (__ / (_/\ )(  
+(__)  (__)(_/\_)(__)     \___)\____/(__) 
+
 pixi - Command-line image processing tool
 
 Usage:    pixi <image_path> [options]
