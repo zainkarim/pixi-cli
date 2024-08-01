@@ -1,6 +1,7 @@
 from PIL import Image, ImageEnhance, ImageOps, ImageFilter
 import argparse
 import os
+import sys
 
 # Load image
 def load_image(image_path):
@@ -131,31 +132,87 @@ def convert_image(image, output_format):
     output_image = image.convert("RGB") if output_format in ['jpg', 'jpeg'] else image
     return output_image
 
+def display_intro_message():
+    intro_message = """
+pixi - Command-line image processing tool
+
+Usage:    pixi [options] <image_path>
+    pixi --exposure EV --contrast LEVEL image.jpg
+    pixi --size image.jpg
+    pixi --convert image.jpg --convert png
+
+pixi is a tool for performing various image processing tasks such as
+adjusting exposure, contrast, saturation, converting image formats, and more.
+
+Example:
+
+    $ pixi --exposure 1.5 --contrast 1.2 image.jpg --output_path processed_image.jpg
+
+For a full list of options, use pixi --h or pixi --help.
+"""
+    print(intro_message)
+
+
 def main():
     parser = argparse.ArgumentParser(description="pixi-cli")
-    parser.add_argument("image_path", help="Path to the input image")
+
+    parser.add_argument("image_path",help="Path to the input image")
+
     parser.add_argument("--output_path", help="Path to save the processed image (optional if only checking size or fetching metadata)")
-    parser.add_argument("--crop", nargs=4, type=int, metavar=('left', 'top', 'right', 'bottom'), help="Crop image")
-    parser.add_argument("--exposure", type=float, help="Adjust exposure")
-    parser.add_argument("--saturation", type=float, help="Adjust saturation")
-    parser.add_argument("--contrast", type = float, help = "Adjust contrast")
-    parser.add_argument("--sharpness", type = float, help = "Adjust sharpness")
-    parser.add_argument("--box_blur", type = float, help = "Blur image (box blur)")
-    parser.add_argument("--gaussian_blur", type = float, help = "Blur image (Gaussian blur)")
+
+    parser.add_argument("--crop", nargs=4, type=int, metavar=('LEFT', 'TOP', 'RIGHT', 'BOTTOM'), help="Crop image")
+
+    parser.add_argument("--exposure", type=float, metavar='EV',
+                    help="Adjust exposure by a certain number of exposure values (e.g., +1.0, -0.5)")
+
+    parser.add_argument("--saturation", type=float, metavar='LEVEL', 
+                    help="Adjust saturation level (e.g., 1.0 for no change, 0.0 to desaturate, 2.0 to increase saturation)")
+
+    parser.add_argument("--contrast", type=float, metavar='LEVEL', 
+                    help="Adjust contrast level (e.g., 1.0 for no change, 0.5 to decrease contrast, 1.5 to increase contrast)")
+
+    parser.add_argument("--sharpness", type=float, metavar='LEVEL', 
+                    help="Adjust sharpness level (e.g., 1.0 for no change, 0.5 for softer, 2.0 for sharper)")
+
+    parser.add_argument("--box_blur", type=float, metavar='RADIUS', 
+                    help="Apply box blur with the specified radius (e.g., 1.0 for minimal blur, higher values for more blur)")
+
+    parser.add_argument("--gaussian_blur", type=float, metavar='RADIUS', 
+                    help="Apply Gaussian blur with the specified radius (e.g., 1.0 for minimal blur, higher values for more blur)")
+
     parser.add_argument("--reduce_noise", action='store_true', help = "Reduce image noise")
+
     parser.add_argument("--edge_detect", action='store_true', help = "Detect edges in image")
+
     parser.add_argument("--bw", action='store_true', help = "Convert to black and white")
+
     parser.add_argument("--invert", action='store_true', help = "Invert colors")
+
     parser.add_argument("--size", action='store_true', help="Get image size")
+
     parser.add_argument("--thumbnail", nargs=2, type=int, metavar=('width', 'height'), help="Create thumbnail")
-    parser.add_argument("--compression", type=int, help="Compress image to specified quality (1-100)")
+
+    parser.add_argument("--compression", type=int, metavar='AMOUNT', help="Compress image to specified quality (1-100)")
+
     parser.add_argument("--metadata", action='store_true', help="Get image metadata")
+
     parser.add_argument("--rotate90", action='store_true', help="Rotate image 90 degrees")
+
     parser.add_argument("--rotate180", action='store_true', help="Rotate image 180 degrees")
+
     parser.add_argument("--rotate270", action='store_true', help="Rotate image 270 degrees")
+
     parser.add_argument("--flip_horiz", action='store_true', help="Flip image horizontally")
+
     parser.add_argument("--flip_vert", action='store_true', help="Flip image vertically")
-    parser.add_argument("--convert", help="Convert image to specified format (e.g., 'png', 'jpg', 'bmp', 'gif', 'tiff', 'svg')")
+
+    parser.add_argument("--convert", metavar='FORMAT', help="Convert image to specified format (e.g., 'png', 'jpg', 'bmp', 'gif', 'tiff', 'svg')")
+
+    # Check if any arguments are passed
+    if len(sys.argv) == 1:
+        display_intro_message()
+        sys.exit()
+
     args = parser.parse_args()
 
     image = load_image(args.image_path)
