@@ -37,7 +37,7 @@ pip install pixi-cli
 
 ### Downloading the Executable
 
-Download the executable from the latest release of `pixi` from the [Releases](https://github.com/zainkarim/pixi-cli/releases) page and run it directly. If you’re familiar with modifying your PATH, you can add the executable to your PATH to run it from any directory.
+Download the executable from the latest release of `pixi` from the [Releases](https://github.com/zainkarim/pixi-cli/releases) page and run it directly.
 
 ## Usage
 
@@ -80,7 +80,7 @@ Download the executable from the latest release of `pixi` from the [Releases](ht
 
 7. **Rotate Image 90 Degrees:**
    ```sh
-   pixi /path/to/input.jpg --output_path /path/to/output.jpg --rotate90
+   pixi /path/to/input.jpg --rotate90
    ```
 
 8. **Convert Image Format:**
@@ -92,19 +92,19 @@ Download the executable from the latest release of `pixi` from the [Releases](ht
 
 - `image_path`: Path to the input image (required).
 - `--output_path`: Path to save the processed image (required for processing operations).
-- `--crop left top right bottom`: Crop the image to the specified box.
-- `--exposure factor`: Adjust the exposure by the given factor.
-- `--saturation factor`: Adjust the saturation by the given factor.
-- `--contrast factor`: Adjust the contrast by the given factor.
-- `--sharpness factor`: Adjust the sharpness by the given factor.
-- `--box_blur radius`: Apply box blur with the specified radius.
-- `--gaussian_blur radius`: Apply Gaussian blur with the specified radius.
+- `--crop LEFT TOP RIGHT BOTTOM`: Crop the image to the specified box.
+- `--exposure EV`: Adjust the exposure by a certain number of exposure values.
+- `--saturation LEVEL`: Adjust saturation level.
+- `--contrast LEVEL`: Adjust the contrast by the given factor.
+- `--sharpness FACTOR`: Adjust the sharpness by the given factor.
+- `--box_blur RADIUS`: Apply box blur with the specified radius.
+- `--gaussian_blur RADIUS`: Apply Gaussian blur with the specified radius.
 - `--reduce_noise`: Reduce noise in the image.
 - `--edge_detect`: Detect edges in the image
 - `--bw`: Convert the image to black and white.
 - `--invert`: Invert the colors of the image.
 - `--thumbnail width height`: Create a thumbnail of the specified size.
-- `--compression quality`: Compress the image to the specified quality (0-100).
+- `--compression QUALITY`: Compress the image to the specified quality (0-100).
 - `--size`: Get the size of the image.
 - `--metadata`: Fetch the metadata of the image.
 - `--rotate90`: Rotate the image 90 degrees clockwise.
@@ -112,7 +112,7 @@ Download the executable from the latest release of `pixi` from the [Releases](ht
 - `--rotate270`: Rotate the image 270 degrees clockwise.
 - `--flip_horiz`: Flip the image horizontally.
 - `--flip_vert`: Flip the image vertically.
-- `--convert format`: Convert the image to the specified format.
+- `--convert FORMAT`: Convert the image to the specified format.
 
 ## Contributing
 
@@ -120,4 +120,4 @@ Contributions are welcome! Please fork the repository and submit pull requests.
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
