@@ -165,7 +165,7 @@ def main():
 
     parser.add_argument("--output_path", help="Path to save the processed image (optional if only checking size or fetching metadata)")
 
-    parser.add_argument("--crop", nargs=4, type=int, metavar=('LEFT', 'TOP', 'RIGHT', 'BOTTOM'), help="Crop image")
+    parser.add_argument("--crop", nargs=4, type=int, metavar=('LEFT', 'TOP', 'RIGHT', 'BOTTOM'), help="Crop image to the specified box")
 
     parser.add_argument("--exposure", type=float, metavar='EV',
                     help="Adjust exposure by a certain number of exposure values (e.g., +1.0, -0.5)")
