@@ -14,7 +14,6 @@ pixi-cli is a command-line tool for image conversion and basic image processing 
 - Apply Gaussian blur
 - Reduce noise
 - Detect edges
-- Apply common filters
 - Convert images to black and white
 - Invert colors
 - Rotate images (90, 180, 270 degrees)
@@ -38,34 +37,7 @@ pip install pixi-cli
 
 ### Downloading the Executable
 
-1. Download the latest release of `pixi` from the [Releases](https://github.com/zainkarim/pixi-cli/releases) page.
-2. Extract the ZIP file to a desired location on your machine.
-
-## Adding pixi to Your PATH
-
-### macOS and Linux
-
-1. Extract the downloaded ZIP file to a desired location, such as `/usr/local/bin/pixi`.
-2. Make the file executable:
-   ```sh
-   chmod +x /usr/local/bin/pixi
-   ```
-3. Open a terminal and edit your shell configuration file (`.bashrc`, `.bash_profile`, `.zshrc`, etc.):
-   ```sh
-   nano ~/.bashrc  # or ~/.bash_profile or ~/.zshrc
-   ```
-4. Add the following line to include the directory in your PATH:
-   ```sh
-   export PATH=$PATH:/usr/local/bin
-   ```
-5. Save the file and source it to apply the changes:
-   ```sh
-   source ~/.bashrc  # or source ~/.bash_profile or source ~/.zshrc
-   ```
-6. Open a new terminal and type `pixi --help` to verify that it works from any location.
-
-### Windows
-Windows support is coming soon!
+Download the executable from the latest release of `pixi` from the [Releases](https://github.com/zainkarim/pixi-cli/releases) page and run it directly. If you’re familiar with modifying your PATH, you can add the executable to your PATH to run it from any directory.
 
 ## Usage
 
