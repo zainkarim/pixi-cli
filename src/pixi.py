@@ -136,10 +136,10 @@ def display_intro_message():
     intro_message = """
 pixi - Command-line image processing tool
 
-Usage:    pixi [options] <image_path>
-    pixi --exposure EV --contrast LEVEL image.jpg
-    pixi --size image.jpg
-    pixi --convert image.jpg --convert png
+Usage:    pixi <image_path> [options]
+    pixi <image_path> --output_path <output_path> --exposure EV --contrast LEVEL
+    pixi <image_path> --size
+    pixi <image_path> --convert png
 
 pixi is a tool for performing various image processing tasks such as
 adjusting exposure, contrast, saturation, converting image formats, and more.
