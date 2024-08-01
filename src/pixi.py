@@ -169,7 +169,7 @@ def main():
         for key, value in metadata.items():
             print(f"{key}: {value}")
 
-    if args.crop or args.exposure or args.saturation or args.contrast or args.sharpness or args.box_blur or args.gaussian_blur or args.reduce_noise or args.edge_detect or args.bw or args.invert or args.thumbnail or args.compression is not None or args.rotate90 or args.rotate180 or args.rotate270 or args.flip_horiz or args.flip_vert:
+    if args.crop or args.exposure or args.saturation or args.contrast or args.sharpness or args.box_blur or args.gaussian_blur or args.reduce_noise or args.edge_detect or args.bw or args.invert or args.thumbnail or args.compression is not None:
         if not args.output_path:
             parser.error("--output_path is required when performing image processing operations")
         
@@ -197,6 +197,15 @@ def main():
             image = bw(image)
         if args.invert:
             image = invert(image)
+
+        quality = args.compression if args.compression else 100
+        save_image(image, args.output_path, quality = quality)
+
+    if args.rotate90 or args.rotate180 or args.rotate270 or args.flip_horiz or args.flip_vert:
+        if args.output_path:
+            output_path = args.output_path
+        else:
+            output_path = args.image_path
         if args.rotate90:
             image = rotate_90(image)
         if args.rotate180:
@@ -207,9 +216,9 @@ def main():
             image = flip_horiz(image)
         if args.flip_vert:
             image = flip_vert(image)
-
         quality = args.compression if args.compression else 100
-        save_image(image, args.output_path, quality = quality)
+        save_image(image, output_path, quality = quality)
+    
 
     if args.convert:
         base, _ = os.path.splitext(args.image_path)
