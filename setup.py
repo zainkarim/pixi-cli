@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="pixi-cli",
-    version="0.1.2",
+    version="0.2.0",
     py_modules=["pixi"],
     install_requires=[
         "Pillow",
