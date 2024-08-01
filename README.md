@@ -114,6 +114,12 @@ Download the executable from the latest release of `pixi` from the [Releases](ht
 - `--flip_vert`: Flip the image vertically.
 - `--convert FORMAT`: Convert the image to the specified format.
 
+## Getting help
+For more options and detailed usage, run:
+```sh
+pixi --help
+```
+
 ## Contributing
 
 Contributions are welcome! Please fork the repository and submit pull requests.
