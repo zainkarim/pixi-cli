@@ -1,5 +1,5 @@
 from PIL import Image, ImageEnhance, ImageOps, ImageFilter
-from progress.bar import IncrementalBar
+from progress.spinner import Spinner
 import argparse
 import os
 import sys
@@ -144,7 +144,7 @@ def display_intro_message():
  ) __/ )(  )  (  )((___)( (__ / (_/\ )(  
 (__)  (__)(_/\_)(__)     \___)\____/(__) 
 
-pixi - Command-line image processing tool [version """ + __version__ + """}]
+pixi - Command-line image processing tool [version """ + __version__ + """]
 
 Usage:    pixi <image_path> [options]
     pixi <image_path> --output_path <output_path> --exposure EV --contrast LEVEL
@@ -164,6 +164,8 @@ For a full list of options, use pixi --h or pixi --help.
 
 def main():
     parser = argparse.ArgumentParser(description="pixi-cli")
+
+    parser.add_argument('--version', action='version', version=f'%(prog)s version {__version__}')
 
     parser.add_argument("image_path",help="Path to the input image")
 
@@ -289,16 +291,18 @@ def main():
     if args.convert:
         base, _ = os.path.splitext(args.image_path)
         output_format = args.convert.lower()
+
         if args.output_path:
             output_path = args.output_path
         else:
             output_path = f"{base}.{output_format}"
+
         if output_format == 'svg':
             import cairosvg
             cairosvg.svg2png(url = args.image_path, write_to = output_path)
         else:
             image = convert_image(image, output_format)
-            image.save(output_path, format = output_format.upper())     
+            image.save(output_path, format = output_format.upper())
 
         print(f"Image saved as {output_path}")
 
