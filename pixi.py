@@ -65,6 +65,37 @@ def invert(image):
     inverted = ImageOps.invert(image)
     return inverted
 
+# Rotate image 90 degrees
+def rotate_90(image):
+    rotated_image = image.transpose(Image.ROTATE_90)
+    return rotated_image
+
+# Rotate image 180 degrees
+def rotate_180(image):
+    rotated_image = image.transpose(Image.ROTATE_180)
+    return rotated_image
+
+# Rotate image 180 degrees
+def rotate_270(image):
+    rotated_image = image.transpose(Image.ROTATE_270)
+    return rotated_image
+
+# Flip image horizontally
+def flip_horiz(image):
+    flip_image = image.transpose(Image.FLIP_LEFT_RIGHT)
+    return flip_image
+
+# Flip image vertically
+def flip_vert(image):
+    flip_image = image.transpose(Image.FLIP_TOP_BOTTOM)
+    return flip_image
+
+# ===== IMAGE CONVERSION =====
+def convert_image(image, output_format):
+    output_image = image.convert("RGB") if output_format in ['jpg', 'jpeg'] else image
+    return output_image
+
+# ===== TOOLS ======
 # Make thumbnails
 def create_thumbnail(image, size):
     thumbnail = image.copy()
@@ -102,39 +133,9 @@ def get_metadata(image):
         return exif_data
     else:
         return {}
-
-# Rotate image 90 degrees
-def rotate_90(image):
-    rotated_image = image.transpose(Image.ROTATE_90)
-    return rotated_image
-
-# Rotate image 180 degrees
-def rotate_180(image):
-    rotated_image = image.transpose(Image.ROTATE_180)
-    return rotated_image
-
-# Rotate image 180 degrees
-def rotate_270(image):
-    rotated_image = image.transpose(Image.ROTATE_270)
-    return rotated_image
-
-# Flip image horizontally
-def flip_horiz(image):
-    flip_image = image.transpose(Image.FLIP_LEFT_RIGHT)
-    return flip_image
-
-# Flip image vertically
-def flip_vert(image):
-    flip_image = image.transpose(Image.FLIP_TOP_BOTTOM)
-    return flip_image
-
-# ===== IMAGE CONVERSION =====
-def convert_image(image, output_format):
-    output_image = image.convert("RGB") if output_format in ['jpg', 'jpeg'] else image
-    return output_image
-
+    
 # ===== UI =====
-pixi_version = '0.2.2'
+__version__ = "0.2.2"
 
 def display_intro_message():
     intro_message = """
@@ -143,7 +144,7 @@ def display_intro_message():
  ) __/ )(  )  (  )((___)( (__ / (_/\ )(  
 (__)  (__)(_/\_)(__)     \___)\____/(__) 
 
-pixi - Command-line image processing tool [version """ + pixi_version + """]
+pixi - Command-line image processing tool [version """ + __version__ + """}]
 
 Usage:    pixi <image_path> [options]
     pixi <image_path> --output_path <output_path> --exposure EV --contrast LEVEL
@@ -160,7 +161,6 @@ Example:
 For a full list of options, use pixi --h or pixi --help.
 """
     print(intro_message)
-
 
 def main():
     parser = argparse.ArgumentParser(description="pixi-cli")
@@ -298,7 +298,7 @@ def main():
             cairosvg.svg2png(url = args.image_path, write_to = output_path)
         else:
             image = convert_image(image, output_format)
-            image.save(output_path, format = output_format.upper())
+            image.save(output_path, format = output_format.upper())     
 
         print(f"Image saved as {output_path}")
 
