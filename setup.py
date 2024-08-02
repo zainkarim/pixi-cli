@@ -7,6 +7,7 @@ setup(
     install_requires=[
         "Pillow",
         "cairosvg"
+        "progressbar"
     ],
     entry_points={
         'console_scripts': [
