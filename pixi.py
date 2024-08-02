@@ -1,4 +1,5 @@
 from PIL import Image, ImageEnhance, ImageOps, ImageFilter
+from progress.bar import IncrementalBar
 import argparse
 import os
 import sys
@@ -132,6 +133,9 @@ def convert_image(image, output_format):
     output_image = image.convert("RGB") if output_format in ['jpg', 'jpeg'] else image
     return output_image
 
+# ===== UI =====
+pixi_version = '0.2.2'
+
 def display_intro_message():
     intro_message = """
  ____  __  _  _  __       ___  __    __  
@@ -139,7 +143,7 @@ def display_intro_message():
  ) __/ )(  )  (  )((___)( (__ / (_/\ )(  
 (__)  (__)(_/\_)(__)     \___)\____/(__) 
 
-pixi - Command-line image processing tool
+pixi - Command-line image processing tool [version """ + pixi_version + """]
 
 Usage:    pixi <image_path> [options]
     pixi <image_path> --output_path <output_path> --exposure EV --contrast LEVEL
