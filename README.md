@@ -91,6 +91,7 @@ Download the executable from the latest release of `pixi` from the [Releases](ht
 ### Full Command-Line Arguments
 
 - `image_path`: Path to the input image (required).
+- `--version`: Show the current version.
 - `--output_path`: Path to save the processed image (required for processing operations).
 - `--crop LEFT TOP RIGHT BOTTOM`: Crop the image to the specified box.
 - `--exposure EV`: Adjust the exposure by a certain number of exposure values.
