@@ -1,5 +1,6 @@
 from PIL import Image, ImageEnhance, ImageOps, ImageFilter
 from progress.spinner import Spinner
+import time
 import argparse
 import os
 import sys
@@ -267,7 +268,12 @@ def main():
             image = invert(image)
 
         quality = args.compression if args.compression else 100
+        spinner = Spinner('Processing image... ')
+        for _ in range (10):
+            time.sleep(0.1)
+            spinner.next()
         save_image(image, args.output_path, quality = quality)
+        print(f"\nImage saved as {args.output_path}")        
 
     if args.rotate90 or args.rotate180 or args.rotate270 or args.flip_horiz or args.flip_vert:
         if args.output_path:
@@ -289,6 +295,7 @@ def main():
     
 
     if args.convert:
+        spinner = Spinner('Converting image... ')
         base, _ = os.path.splitext(args.image_path)
         output_format = args.convert.lower()
 
@@ -301,10 +308,13 @@ def main():
             import cairosvg
             cairosvg.svg2png(url = args.image_path, write_to = output_path)
         else:
-            image = convert_image(image, output_format)
+            image = convert_image(image, output_format) 
+            for _ in range (10):
+                time.sleep(0.1)
+                spinner.next()
             image.save(output_path, format = output_format.upper())
 
-        print(f"Image saved as {output_path}")
+        print(f"\nImage saved as {output_path}")
 
 if __name__ == "__main__":
     main()
